@@ -59,13 +59,14 @@ def randomadd(value, spread):
 # MQTT Publish Line
 def mqtt_publish_single(message, topic):
     topic = '{0}/{1}'.format("weathersense", topic)
-    return
+    # return
     try:
         publish.single(
             topic=topic,
             payload=message,
             hostname=config.MQTThost,
             port=config.MQTTport,
+            client_id="WeatherSenseMonitor",
             qos=config.MQTTqos
         )
     except:
@@ -218,9 +219,9 @@ def processF016TH(sLine, ReadingCountArray):
             print(ReadingCountArray)
 
     var = json.loads(sLine)
-
+    
     if (config.enable_MQTT == True):
-        mqtt_publish_single(sLine, "F016TH")
+        mqtt_publish_single(sLine, '/'.join(["F016TH", str(var["channel"])]))
 
     lastIndoorReading = nowStr()
 

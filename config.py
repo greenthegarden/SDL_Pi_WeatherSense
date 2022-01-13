@@ -10,30 +10,32 @@ SWDEBUG = True
 SWVERSION = "000"  # set in WeatherSenseMontor.py
 import uuid
 
-#configure SkyCam Remote camera
-#default
-DefaultCameraRotation = 90
-SkyCamRotationArray = {}
-SkyCamRotationArray["DE45"] = 90
-SkyCamRotationArray["3BAD"] =270 
-SkyCamRotationArray["26FD"] =270 
+# #configure SkyCam Remote camera
+# #default
+# DefaultCameraRotation = 90
+# SkyCamRotationArray = {}
+# SkyCamRotationArray["DE45"] = 90
+# SkyCamRotationArray["3BAD"] =270 
+# SkyCamRotationArray["26FD"] =270 
 
 
 # MySQL Logging and Password Information
 
-enable_MySQL_Logging = True
+enable_MySQL_Logging = False
 MySQL_Host = "localhost"
 MySQL_User = "root"
 MySQL_Password = "password"
 MySQL_Schema = "WeatherSenseWireless"
 
 # 0 is English, 1 is metric
-English_Metric = 0
+English_Metric = 1
+
+enable_SkyCamRemote = False
 
 # configuration for MQTT
 
 enable_MQTT = True
-MQTThost = "localhost"
+MQTThost = "192.168.1.186"
 MQTTport = 1883
 MQTTqos = 0
 

@@ -94,7 +94,7 @@ scheduler.add_job(wirelessSensors.readSensors)  # run in background
 
 
 # process SkyCam Remote bi-directional messages 
-if (config.enable_MQTT == True):
+if (config.enable_SkyCamRemote == True):
     scheduler.add_job(SkyCamRemote.startMQTT)  # run in background
 
 # SkyCam Management Programs

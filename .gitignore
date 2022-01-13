@@ -20,3 +20,5 @@ dash_app/assets/skycamera.jpg
 static/*.jpg
 __pycache__
 .idea
+
+*.log
