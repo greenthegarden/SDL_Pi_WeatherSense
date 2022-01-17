@@ -7,8 +7,14 @@ now=$(date +"%Y-%m-%d")
 
 echo $(pwd)
 
+if [ ! -d SDL_Pi_WeatherSense ] ; then
+  cd local
+  echo $(pwd)
+fi
+
 if [ -d SDL_Pi_WeatherSense ] ; then
   cd SDL_Pi_WeatherSense
+  echo $(pwd)
 fi
 
 if [ -f ${script} ] ; then
