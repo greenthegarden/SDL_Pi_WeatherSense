@@ -5,6 +5,10 @@ script="WeatherSenseMonitor.py"
 var=$(date +"%FORMAT_STRING")
 now=$(date +"%Y-%m-%d")
 
+echo $(pwd)
+
+tree
+
 if [ -d weather-sense-monitor ] ; then
   cd weather-sense-monitor
 fi
