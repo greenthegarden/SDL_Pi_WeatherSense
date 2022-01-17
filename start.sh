@@ -20,7 +20,7 @@ fi
 if [ -f ${script} ] ; then
   printf "\n\nStarting %s at %s\n" ${script} ${now}
   printf "Logging to %s\n\n" "${script/.py/_${now}.log}"
-  sudo /usr/bin/python3 ${script} >> "${script/.py/_${now}.log}" 2>&1
+  sudo /usr/bin/python3 ${script} #>> "${script/.py/_${now}.log}" 2>&1
 else
   printf "Required script %s not found!!\n"
   exit 1
