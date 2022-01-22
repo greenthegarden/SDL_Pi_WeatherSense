@@ -97,14 +97,14 @@ scheduler.add_job(wirelessSensors.readSensors)  # run in background
 if (config.enable_SkyCamRemote == True):
     scheduler.add_job(SkyCamRemote.startMQTT)  # run in background
 
-# SkyCam Management Programs
-scheduler.add_job(PictureManagement.cleanPictures, 'cron', day='*', hour=3, minute=4, args=["Daily Picture Clean"])
+    # SkyCam Management Programs
+    scheduler.add_job(PictureManagement.cleanPictures, 'cron', day='*', hour=3, minute=4, args=["Daily Picture Clean"])
 
-scheduler.add_job(PictureManagement.cleanTimeLapses, 'cron', day='*', hour=3, minute=10, args=["Daily Time Lapse Clean"])
+    scheduler.add_job(PictureManagement.cleanTimeLapses, 'cron', day='*', hour=3, minute=10, args=["Daily Time Lapse Clean"])
 
-scheduler.add_job(PictureManagement.buildTimeLapse, 'cron', day='*', hour=5, minute=30, args=["Time Lapse Generation"])
+    scheduler.add_job(PictureManagement.buildTimeLapse, 'cron', day='*', hour=5, minute=30, args=["Time Lapse Generation"])
 
-scheduler.add_job(wirelessSensors.readSensors)  # run in background
+# scheduler.add_job(wirelessSensors.readSensors)  # run in background
 
 scheduler.print_jobs()
 

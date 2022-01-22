@@ -17,6 +17,7 @@ import state
 import os
 import util
 
+from HaMqttDevice import *
 from paho.mqtt import publish
 
 import aqi
@@ -36,6 +37,7 @@ def nowStr():
 
 
 # stripped = lambda s: "".join(i for i in s if 31 < ord(i) < 127)
+
 
 
 #   We're using a queue to capture output as it occurs
@@ -215,7 +217,6 @@ def processF016TH(sLine, ReadingCountArray):
         sys.stdout.write('Processing F016TH data' + '\n')
         sys.stdout.write('This is the raw data: ' + sLine + '\n')
         if config.SWDEBUG:
-        
             print(ReadingCountArray)
 
     var = json.loads(sLine)
