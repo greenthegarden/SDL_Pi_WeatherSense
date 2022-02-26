@@ -1,0 +1,7 @@
+future
+paho-mqtt
+python-aqi
+APScheduler
+Pillow
+ffmpeg-python
+
