@@ -19,6 +19,9 @@ import util
 
 from paho.mqtt import publish
 
+from ha_mqtt.ha_device import HaDevice
+from ha_mqtt.mqtt_device_base import MqttDeviceSettings
+
 import aqi
 
 
@@ -76,6 +79,10 @@ def mqtt_publish_single(message, topic):
 
 # process functions
 import gpiozero
+
+# create device info dictionary
+dev = HaDevice("FT020T", "FT020T-weatherstation")
+
 
 
 def processFT020T(sLine, lastFT020TTimeStamp, ReadingCount):

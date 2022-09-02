@@ -107,3 +107,29 @@ http://<your IP Number>:8050/
 Use "hostname -I" to your your Raspberry Pi IP Number.
 
 Example:  http://192.168.1.32:8050/
+
+## Pulling changes to fork
+
+Add the original repository as remote repository called "upstream"
+
+```sh
+git remote add upstream https://github.com/switchdoclabs/SDL_Pi_WeatherSense.git
+```
+
+Fetch all changes from the upstream repository
+
+```sh
+git fetch upstream
+```
+
+Switch to the master branch of your fork
+
+```sh
+git checkout master
+```
+
+Merge changes from the upstream repository into your fork
+
+````sh
+git merge upstream/master
+````

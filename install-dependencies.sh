@@ -32,4 +32,3 @@ sudo mysql -u root -p < WeatherSenseWireless.sql
 # install python dependencies
 sudo apt-get install -y libopenjp2-7
 sudo python3 -m pip install -r requirements.txt
-

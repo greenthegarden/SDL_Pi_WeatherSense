@@ -4,4 +4,4 @@ python-aqi
 APScheduler
 Pillow
 ffmpeg-python
-
+homeassistant-mqtt-binding
