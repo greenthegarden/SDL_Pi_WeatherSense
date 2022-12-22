@@ -18,6 +18,8 @@ if [ -d SDL_Pi_WeatherSense ] ; then
 fi
 
 if [ -f ${script} ] ; then
+  printf "\n\nInitialising database\n"
+  sudo mysql -u root -p < WeatherSenseWireless.sql
   printf "\n\nStarting %s at %s\n" ${script} ${now}
   printf "Logging to %s\n\n" "${script/.py/_${now}.log}"
   /usr/bin/python3 ${script} #>> "${script/.py/_${now}.log}" 2>&1
