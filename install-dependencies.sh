@@ -2,6 +2,9 @@
 
 CWD="$(pwd)"
 
+# Install Nomad dependencies
+sudo pip3 install SafecastPy
+
 install_rtl433 () {
 # install rtl_433 library
 sudo apt-get install -y libtool libusb-1.0-0-dev librtlsdr-dev rtl-sdr build-essential autoconf cmake pkg-config
@@ -32,4 +35,3 @@ sudo mysql -u root -p < WeatherSenseWireless.sql
 # install python dependencies
 sudo apt-get install -y libopenjp2-7
 sudo python3 -m pip install -r requirements.txt
-

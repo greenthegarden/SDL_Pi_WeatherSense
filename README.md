@@ -1,11 +1,20 @@
 SwitchDoc Labs WeatherSense Open Source Protocol Monitor
 
+For webupdate<BR>
+
+pip install SafecastPy
+
+
+
 Program monitors the SwitchDoc Labs SDR on Pi for all WeatherSense instruments and records to database
 
 And publishes to MQTT topic "weathersense/#"
 
 
-Version V012 August 23,2021 - Check for Database existance<BR>
+Version V016 April 30,2022 - local updateWeb Logic Added<BR>
+Version V015 April 16,2022 - WR2 Light update and database<BR>
+Version V014 April 11,2022 - Added fixSkyCamRemote.py for setting MQTT addresses<BR>
+Version V013 March 23,2022 - Added Radiation Detector Support<BR>
 
 
 Before starting V008 or greater, do: <BR>
@@ -18,6 +27,7 @@ if you are updating from an older database version do the following:
 sudo mysql -u root -p WeatherSenseWireless < updateWeatherSenseWireless.sql
 </pre>
 
+Version V012 August 23,2021 - Check for Database existance<BR>
 Version V011 August 22,2021 - TimeLapse Error Fix<BR>
 Version V010 August 21,2021 - Lightning Formatting<BR>
 Version V009 August 13,2021 - Fix for TimeLapse date sorting<BR>
@@ -40,6 +50,7 @@ Supports:<BR>
 - SolarMAX2 Solar Panel System<BR>
 - AfterShock Earthquake Detector System<BR>
 - WeatherSense SkyCam <BR>
+- WeatherSense Radiation Detector <BR>
 
 Supporting in the future:<BR>
 - WeatherSense Generic <BR>
@@ -76,7 +87,7 @@ sudo pip3 install mysqlclient
 Next:
 
 <pre>
-sudo -u root -p < WeatherSenseWireless.sql
+sudo mysql -u root -p < WeatherSenseWireless.sql
 </pre>
 
 Now to run:
@@ -107,3 +118,29 @@ http://<your IP Number>:8050/
 Use "hostname -I" to your your Raspberry Pi IP Number.
 
 Example:  http://192.168.1.32:8050/
+
+## Pulling changes to fork
+
+Add the original repository as remote repository called "upstream"
+
+```sh
+git remote add upstream https://github.com/switchdoclabs/SDL_Pi_WeatherSense.git
+```
+
+Fetch all changes from the upstream repository
+
+```sh
+git fetch upstream
+```
+
+Switch to the master branch of your fork
+
+```sh
+git checkout master
+```
+
+Merge changes from the upstream repository into your fork
+
+````sh
+git merge upstream/master
+````

@@ -5,4 +5,4 @@ APScheduler
 Pillow
 ffmpeg-python
 supervisor
-
+homeassistant-mqtt-binding
