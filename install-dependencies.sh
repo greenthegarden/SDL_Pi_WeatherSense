@@ -2,6 +2,9 @@
 
 CWD="$(pwd)"
 
+# Install Nomad dependencies
+sudo pip3 install SafecastPy
+
 install_rtl433 () {
 # install rtl_433 library
 sudo apt-get install -y libtool libusb-1.0-0-dev librtlsdr-dev rtl-sdr build-essential autoconf cmake pkg-config
