@@ -19,12 +19,17 @@ import util
 
 import updateWeb
 
+import aqi
+
 from paho.mqtt import publish
+from paho.mqtt.client import Client
 
 from ha_mqtt.ha_device import HaDevice
-from ha_mqtt.mqtt_device_base import MqttDeviceSettings
+from ha_mqtt.mqtt_device_base import MqttDeviceBase, MqttDeviceSettings
+from ha_mqtt.mqtt_sensor import MqttSensor
+from ha_mqtt.mqtt_thermometer import MqttThermometer
+from ha_mqtt.util import HaDeviceClass
 
-import aqi
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------

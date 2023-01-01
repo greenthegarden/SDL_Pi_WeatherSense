@@ -19,9 +19,12 @@ client.connect("localhost", 1883)
 client.loop_start()
 
 
-dev = HaDevice("FT16", "Indoor Sensor 1")
-dev_hum = MqttDeviceSettings("FT16_1_hum", "hum1", client)
-dev_temp = MqttDeviceSettings("FT16_1_temp", "temp1", client)
+dev = HaDevice("F016TH", "Indoor Sensor 1")
+dev.add_config_option("manufacturer", "switchdoc")
+dev.add_config_option("model", "F016TH")
+dev.add_config_option("softwareversion", "1.0.0")
+dev_hum = MqttDeviceSettings("F016TH_1_hum", "hum1", client, dev)
+dev_temp = MqttDeviceSettings("F016TH_1_temp", "temp1", client, dev)
 sens_hum = MqttSensor(dev_hum, "%", HaDeviceClass.HUMIDITY)
 sens_temp = MqttSensor(dev_temp, "°C", HaDeviceClass.TEMPERATURE)
 # instantiate an MQTTThermometer object

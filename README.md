@@ -144,3 +144,8 @@ Merge changes from the upstream repository into your fork
 ````sh
 git merge upstream/master
 ````
+
+mysql
+
+user: root
+password: homeassistant
