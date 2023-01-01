@@ -40,10 +40,10 @@ MQTTport = 1883
 MQTTqos = 0
 
 # configuration for WeatherRack2
-# This variables tell you how often to record values for the WeahterRack2
+# This variables tell you how often to record values for the WeatherRack2
 # You get a reading about every 45 seconds and this leads to big databases 
 # about 14,000 records a week.  Remember that each FT020 Transmission is
-# duplicated which means you nead a value of 2X what you want
+# duplicated which means you need a value of 2X what you want
 # The default value is 20, which gives us about 1400 or about every 7.5 minutes.
 
 RecordEveryXReadings = 20
@@ -54,6 +54,6 @@ RecordEveryXReadings = 20
 # The indoor T/H sensors also send a duplicate record but the rtl_433 software
 # filters it out.
 # The default value is 10, which gives us a value about every 10 minutes 
-# per sensor.  Each sensor is counted seperately in the wirelessSensors.py
+# per sensor.  Each sensor is counted separately in the wirelessSensors.py
 
 IndoorRecordEveryXReadings = 10

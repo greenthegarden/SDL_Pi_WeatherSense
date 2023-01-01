@@ -1,5 +1,9 @@
 -- phpMyAdmin SQL Dump
 
+CREATE DATABASE IF NOT EXISTS `WeatherSenseWireless`;
+
+use `WeatherSenseWireless`;
+
 -- TimeStamp fix
 
 alter table AQI433MHZ change column `TimeStamp` `TimeStamp` timestamp NOT NULL DEFAULT current_timestamp();
@@ -31,6 +35,10 @@ SET time_zone = "+00:00";
 --
 -- Database: `WeatherSenseWireless`
 --
+
+CREATE DATABASE IF NOT EXISTS `WeatherSenseWireless`;
+
+use `WeatherSenseWireless`;
 
 -- --------------------------------------------------------
 
