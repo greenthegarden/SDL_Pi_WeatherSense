@@ -95,19 +95,18 @@ scheduler.add_listener(ap_my_listener, apscheduler.events.EVENT_JOB_ERROR)
 # read wireless sensor package
 scheduler.add_job(wirelessSensors.readSensors)  # run in background
 
-
 # process SkyCam Remote bi-directional messages 
 if (config.enable_SkyCamRemote == True):
     scheduler.add_job(SkyCamRemote.startMQTT)  # run in background
 
-# SkyCam Management Programs
-scheduler.add_job(PictureManagement.cleanPictures, 'cron', day='*', hour=3, minute=4, args=["Daily Picture Clean"])
+    # SkyCam Management Programs
+    scheduler.add_job(PictureManagement.cleanPictures, 'cron', day='*', hour=3, minute=4, args=["Daily Picture Clean"])
 
-scheduler.add_job(PictureManagement.cleanTimeLapses, 'cron', day='*', hour=3, minute=10, args=["Daily Time Lapse Clean"])
+    scheduler.add_job(PictureManagement.cleanTimeLapses, 'cron', day='*', hour=3, minute=10, args=["Daily Time Lapse Clean"])
 
-scheduler.add_job(PictureManagement.buildTimeLapse, 'cron', day='*', hour=5, minute=30, args=["Time Lapse Generation"])
+    scheduler.add_job(PictureManagement.buildTimeLapse, 'cron', day='*', hour=5, minute=30, args=["Time Lapse Generation"])
 
-scheduler.add_job(wirelessSensors.readSensors)  # run in background
+    scheduler.add_job(wirelessSensors.readSensors)  # run in background
 
 scheduler.print_jobs()
 

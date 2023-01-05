@@ -22,7 +22,7 @@ import updateWeb
 import aqi
 
 from paho.mqtt import publish
-from paho.mqtt.client import Client
+import paho.mqtt.client as mqtt
 
 from ha_mqtt.ha_device import HaDevice
 from ha_mqtt.mqtt_device_base import MqttDeviceBase, MqttDeviceSettings
@@ -30,6 +30,11 @@ from ha_mqtt.mqtt_sensor import MqttSensor
 from ha_mqtt.mqtt_thermometer import MqttThermometer
 from ha_mqtt.util import HaDeviceClass
 
+
+# instantiate an paho mqtt client and connect to the mqtt server
+mqttc = mqtt.Client()
+mqttc.connect("emqx.home-assistant.localdomain", 1883)
+mqttc.loop_start()
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -88,8 +93,19 @@ def mqtt_publish_single(message, topic):
 import gpiozero
 
 # create device info dictionary
-dev = HaDevice("FT020T", "FT020T-weatherstation")
+weatherstation_ft020t = HaDevice("FT020T", "FT020T-weatherstation")
+# thermo_f016th_1 = HaDevice("F016TH Channel 1", "FT016TH-thermometer-01")
+thermo_f016th_2 = HaDevice("F016TH Channel 2", "FT016TH-thermometer-02")
 
+
+dev_F016TH_ch1 = HaDevice("F016TH_1", "Indoor Sensor 1")
+dev_F016TH_ch1.add_config_option("manufacturer", "SwitchDoc Labs")
+dev_F016TH_ch1.add_config_option("model", "F016TH")
+dev_F016TH_ch1.add_config_option("softwareversion", "1.0.0")
+dev_F016TH_ch1_humidity = MqttDeviceSettings("F016TH_ch1_humidity", "hF016TH_ch1_humidityum1", mqttc, dev_F016TH_ch1)
+dev_F016TH_ch1_temperature = MqttDeviceSettings("F016TH_ch1_temperature", "F016TH_ch1_temperature", mqttc, dev_F016TH_ch1)
+sensor_F016TH_ch1_humidity = MqttSensor(dev_F016TH_ch1_humidity, "%", HaDeviceClass.HUMIDITY)
+sensor_F016TH_ch1_temperature = MqttSensor(dev_F016TH_ch1_temperature, "°C", HaDeviceClass.TEMPERATURE)
 
 
 def processFT020T(sLine, lastFT020TTimeStamp, ReadingCount):
@@ -234,8 +250,15 @@ def processF016TH(sLine, ReadingCountArray):
 
     var = json.loads(sLine)
     
+    IndoorTemperature = round(((var["temperature_F"] - 32.0) / (9.0 / 5.0)), 2)
+    #IndoorTemperature = var["temperature_F"]
+
     if (config.enable_MQTT == True):
         mqtt_publish_single(sLine, '/'.join(["F016TH", str(var["channel"])]))
+        channel = var["channel"]
+        if (channel == 1):
+            sensor_F016TH_ch1_humidity.publish_state(var["humidity"])
+            sensor_F016TH_ch1_temperature.publish_state(IndoorTemperature)
 
     lastIndoorReading = nowStr()
 
@@ -256,8 +279,6 @@ def processF016TH(sLine, ReadingCountArray):
     # ReadingCountArray[var["channel"]] = ReadingCountArray[var["channel"]] + 1
     ReadingCountArray[chan_array_pos] += 1
 
-    IndoorTemperature = round(((var["temperature_F"] - 32.0) / (9.0 / 5.0)), 2)
-    #IndoorTemperature = var["temperature_F"]
 
     if (config.enable_MySQL_Logging == True):
         # open mysql database
@@ -717,14 +738,15 @@ def readSensors():
             sLine = line.decode()
             #   See if the data is something we need to act on...
 
-            if (sLine.find('F007TH') != -1) or (sLine.find('FT0300') != -1) or (sLine.find('F016TH') != -1) or (
-                    sLine.find('FT020T') != -1):
+            # if (sLine.find('F007TH') != -1) or (sLine.find('FT0300') != -1) or (sLine.find('F016TH') != -1) or (
+            #         sLine.find('FT020T') != -1):
 
-                if ((sLine.find('F007TH') != -1) or (sLine.find('F016TH') != -1)):
-                    processF016TH(sLine, IndoorReadingCountArray)
-                if ((sLine.find('FT0300') != -1) or (sLine.find('FT020T') != -1)):
-                    lastFT020TTimeStamp = processFT020T(sLine, lastFT020TTimeStamp, FT020Count)
-                    FT020Count = FT020Count + 1
+            if ((sLine.find('F007TH') != -1) or (sLine.find('F016TH') != -1)):
+                processF016TH(sLine, IndoorReadingCountArray)
+                
+            if ((sLine.find('FT0300') != -1) or (sLine.find('FT020T') != -1)):
+                lastFT020TTimeStamp = processFT020T(sLine, lastFT020TTimeStamp, FT020Count)
+                FT020Count = FT020Count + 1
 
             if (sLine.find('SolarMAX') != -1):
                 processSolarMAX(sLine)

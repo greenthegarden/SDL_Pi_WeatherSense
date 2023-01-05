@@ -149,3 +149,10 @@ mysql
 
 user: root
 password: homeassistant
+
+## Home Assistant MQTT Discovery
+
+Portential libraries (https://github.com/topics/mqtt-discovery)
+
+* https://github.com/alphonse82/homeassistant-mqtt-devices
+* https://github.com/unixorn/ha-mqtt-discovery
