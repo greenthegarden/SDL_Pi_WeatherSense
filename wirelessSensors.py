@@ -45,7 +45,7 @@ from ha_mqtt.util import HaDeviceClass
 # # thermo_f016th_1 = HaDevice("F016TH Channel 1", "FT016TH-thermometer-01")
 # thermo_f016th_2 = HaDevice("F016TH Channel 2", "FT016TH-thermometer-02")
 
-dev_F016TH_ch1 = HaDevice("F016TH Channel 1", "F016TH_ch1")
+dev_F016TH_ch1 = HaDevice("F016TH Thermo-Hygrometer Channel 1", "F016TH_ch1")
 dev_F016TH_ch1.add_config_option("manufacturer", "SwitchDoc Labs")
 dev_F016TH_ch1.add_config_option("model", "SwitchDoc Labs F016TH Thermo-Hygrometer")
 dev_F016TH_ch1_batteryState = MqttDeviceSettings("F016TH Channel 1 Battery State", "F016TH_ch1_batteryState", client, dev_F016TH_ch1)
@@ -55,7 +55,7 @@ sensor_F016TH_ch1_humidity = MqttSensor(dev_F016TH_ch1_humidity, "%", HaDeviceCl
 dev_F016TH_ch1_temperature = MqttDeviceSettings("F016TH Channel 1 Temperature", "F016TH_ch1_temperature", client, dev_F016TH_ch1)
 sensor_F016TH_ch1_temperature = MqttSensor(dev_F016TH_ch1_temperature, "°C", HaDeviceClass.TEMPERATURE, send_only=True)
 
-dev_F016TH_ch2 = HaDevice("F016TH Channel 2", "F016TH_ch2")
+dev_F016TH_ch2 = HaDevice("F016TH Thermo-Hygrometer Channel 2", "F016TH_ch2")
 dev_F016TH_ch2.add_config_option("manufacturer", "SwitchDoc Labs")
 dev_F016TH_ch2.add_config_option("model", "SwitchDoc Labs F016TH Thermo-Hygrometer")
 dev_F016TH_ch2_batteryState = MqttDeviceSettings("F016TH Channel 2 Battery State", "F016TH_ch2_batteryState", client, dev_F016TH_ch2)
@@ -71,7 +71,7 @@ dev_FT020T.add_config_option("model", "SwitchDoc Labs FT020T AIO")
 dev_FT020T_batteryState = MqttDeviceSettings("FT020T Battery State", "FT020T_batteryState", client, dev_FT020T)
 sensor_FT020T_batteryState = MqttSensor(dev_FT020T_batteryState, "", HaDeviceClass.BATTERY, send_only=True)
 dev_FT020T_cumulativeRain = MqttDeviceSettings("FT020T Cumulative Rain", "FT020T_cumulativeRain", client, dev_FT020T)
-sensor_FT020T_cumulativeRain = MqttSensor(dev_FT020T_cumulativeRain, "mm", HaDeviceClass.NONE, send_only=True)
+sensor_FT020T_cumulativeRain = MqttSensor(dev_FT020T_cumulativeRain, "mm", HaDeviceClass.PRECIPITATION, send_only=True)
 dev_FT020T_humidity = MqttDeviceSettings("FT020T Humidity", "FT020T_humidity", client, dev_FT020T)
 sensor_FT020T_humidity = MqttSensor(dev_FT020T_humidity, "%", HaDeviceClass.HUMIDITY, send_only=True)
 dev_FT020T_light = MqttDeviceSettings("FT020T Light", "FT020T_light", client, dev_FT020T)
@@ -242,8 +242,10 @@ def processFT020T(sLine, lastFT020TTimeStamp, ReadingCount):
 
     if (var['batterylow'] == 0):
         BatteryOK = "OK"
+        BatteryLevel = 100
     else:
         BatteryOK = "LOW"
+        BatteryLevel = 50
 
     # SkyWeather2 Compatiblity
     AQI = 0
@@ -255,7 +257,7 @@ def processFT020T(sLine, lastFT020TTimeStamp, ReadingCount):
     BarometricTemperature = 0.0
 
     if (config.enable_HA_discovery == True):
-        sensor_FT020T_batteryState.publish_state(BatteryOK)
+        sensor_FT020T_batteryState.publish_state(BatteryLevel)
         sensor_FT020T_cumulativeRain.publish_state(TotalRain)
         sensor_FT020T_humidity.publish_state(OutdoorHumidity)
         sensor_FT020T_light.publish_state(SunlightVisible)
@@ -324,16 +326,23 @@ def processF016TH(sLine, ReadingCountArray):
 
     IndoorTemperature = round(((var["temperature_F"] - 32.0) / (9.0 / 5.0)), 2)
     #IndoorTemperature = var["temperature_F"]
+    
+    if (var['battery'] == "OK"):
+        batteryState = "OK"
+        batteryLevel = 100
+    else:
+        batteryState = "LOW"
+        batteryLevel = 50
 
     if (config.enable_HA_discovery == True):    
         channel = var["channel"]
         sys.stdout.write('Channel ' + str(channel) + '\n')
         if (channel == 1):
-            sensor_F016TH_ch1_batteryState.publish_state(var["battery"])
+            sensor_F016TH_ch1_batteryState.publish_state(batteryLevel)
             sensor_F016TH_ch1_humidity.publish_state(var["humidity"])
             sensor_F016TH_ch1_temperature.publish_state(IndoorTemperature)
         if (channel == 2):
-            sensor_F016TH_ch2_batteryState.publish_state(var["battery"])
+            sensor_F016TH_ch2_batteryState.publish_state(batteryLevel)
             sensor_F016TH_ch2_humidity.publish_state(var["humidity"])
             sensor_F016TH_ch2_temperature.publish_state(IndoorTemperature)
 
