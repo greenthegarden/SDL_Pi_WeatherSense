@@ -34,8 +34,13 @@ enable_SkyCamRemote = False
 
 # configuration for MQTT
 
-enable_MQTT = True
-MQTThost = "192.168.1.186"
+enable_MQTT = False
+MQTThost = "emqx.home-assistant.localdomain"
+MQTTport = 1883
+MQTTqos = 0
+
+enable_HA_discovery = True
+MQTThost = "emqx.home-assistant.localdomain"
 MQTTport = 1883
 MQTTqos = 0
 

@@ -22,7 +22,17 @@ import updateWeb
 import aqi
 
 from paho.mqtt import publish
-import paho.mqtt.client as mqtt
+from paho.mqtt.client import Client
+
+# The callback for when the client receives a CONNACK response from the server.
+def on_connect(client, userdata, flags, rc):
+    print("Connected with result code " + str(rc))
+
+# instantiate an paho mqtt client and connect to the mqtt server
+client = Client("WeatherSenseMonitor")
+client.on_connect = on_connect
+client.connect("emqx.home-assistant.localdomain", 1883)
+client.loop_start()
 
 from ha_mqtt.ha_device import HaDevice
 from ha_mqtt.mqtt_device_base import MqttDeviceBase, MqttDeviceSettings
@@ -30,11 +40,69 @@ from ha_mqtt.mqtt_sensor import MqttSensor
 from ha_mqtt.mqtt_thermometer import MqttThermometer
 from ha_mqtt.util import HaDeviceClass
 
+# create device info dictionary
+# weatherstation_ft020t = HaDevice("FT020T", "FT020T-weatherstation", send_only=True)
+# # thermo_f016th_1 = HaDevice("F016TH Channel 1", "FT016TH-thermometer-01")
+# thermo_f016th_2 = HaDevice("F016TH Channel 2", "FT016TH-thermometer-02")
 
-# instantiate an paho mqtt client and connect to the mqtt server
-mqttc = mqtt.Client()
-mqttc.connect("emqx.home-assistant.localdomain", 1883)
-mqttc.loop_start()
+dev_F016TH_ch1 = HaDevice("F016TH Channel 1", "F016TH_ch1")
+dev_F016TH_ch1.add_config_option("manufacturer", "SwitchDoc Labs")
+dev_F016TH_ch1.add_config_option("model", "SwitchDoc Labs F016TH Thermo-Hygrometer")
+dev_F016TH_ch1_humidity = MqttDeviceSettings("F016TH Channel 1 Humidity", "F016TH_ch1_humidity", client, dev_F016TH_ch1)
+dev_F016TH_ch1_temperature = MqttDeviceSettings("F016TH Channel 1 Temperature", "F016TH_ch1_temperature", client, dev_F016TH_ch1)
+sensor_F016TH_ch1_humidity = MqttSensor(dev_F016TH_ch1_humidity, "%", HaDeviceClass.HUMIDITY, send_only=True)
+sensor_F016TH_ch1_temperature = MqttSensor(dev_F016TH_ch1_temperature, "°C", HaDeviceClass.TEMPERATURE, send_only=True)
+
+dev_F016TH_ch2 = HaDevice("F016TH Channel 2", "F016TH_ch2")
+dev_F016TH_ch2.add_config_option("manufacturer", "SwitchDoc Labs")
+dev_F016TH_ch2.add_config_option("model", "SwitchDoc Labs F016TH Thermo-Hygrometer")
+dev_F016TH_ch2_humidity = MqttDeviceSettings("F016TH Channel 2 Humidity", "F016TH_ch2_humidity", client, dev_F016TH_ch2)
+sensor_F016TH_ch2_humidity = MqttSensor(dev_F016TH_ch2_humidity, "%", HaDeviceClass.HUMIDITY, send_only=True)
+dev_F016TH_ch2_temperature = MqttDeviceSettings("F016TH Channel 2 Temperature", "F016TH_ch2_temperature", client, dev_F016TH_ch2)
+sensor_F016TH_ch2_temperature = MqttSensor(dev_F016TH_ch2_temperature, "°C", HaDeviceClass.TEMPERATURE, send_only=True)
+
+dev_FT020T = HaDevice("FT020T", "FT020T")
+dev_FT020T.add_config_option("manufacturer", "SwitchDoc Labs")
+dev_FT020T.add_config_option("model", "SwitchDoc Labs FT020T AIO")
+dev_FFT020T_batteryState = MqttDeviceSettings("FT020T Battery State", "FFT020T_batteryState", client, dev_FT020T)
+sensor_FT020T_batteryState = MqttSensor(dev_FFT020T_batteryState, "", HaDeviceClass.NONE, send_only=True)
+dev_FFT020T_cumulativeRain = MqttDeviceSettings("FT020T Cumulative Rain", "FFT020T_cumulativeRain", client, dev_FT020T)
+sensor_FT020T_cumulativeRain = MqttSensor(dev_FFT020T_cumulativeRain, "mm", HaDeviceClass.NONE, send_only=True)
+dev_FT020T_humidity = MqttDeviceSettings("FT020T Humidity", "FT020T_humidity", client, dev_FT020T)
+sensor_FT020T_humidity = MqttSensor(dev_FT020T_humidity, "%", HaDeviceClass.HUMIDITY, send_only=True)
+dev_FT020T_light = MqttDeviceSettings("FT020T Light", "FT020T_light", client, dev_FT020T)
+sensor_FT020T_light = MqttSensor(dev_FT020T_light, "klux", HaDeviceClass.ILLUMINANCE , send_only=True)
+dev_FT020T_temperature = MqttDeviceSettings("FT020T Temperature", "FT020T_temperature", client, dev_FT020T)
+sensor_FT020T_temperature = MqttSensor(dev_FT020T_temperature, "°C", HaDeviceClass.TEMPERATURE, send_only=True)
+dev_FT020T_uv = MqttDeviceSettings("FT020T UV", "FT020T_uv", client, dev_FT020T)
+sensor_FT020T_uv = MqttSensor(dev_FT020T_uv, "", HaDeviceClass.NONE, send_only=True)
+dev_FFT020T_windDirection = MqttDeviceSettings("FT020T Wind Direction", "FFT020T_windDirection", client, dev_FT020T)
+sensor_FT020T_windDirection = MqttSensor(dev_FFT020T_windDirection, "°", HaDeviceClass.NONE, send_only=True)
+dev_FFT020T_windSpeedAvg = MqttDeviceSettings("FT020T Windspeed (Avg)", "FFT020T_windSpeedAvg", client, dev_FT020T)
+sensor_FT020T_windSpeedAvg = MqttSensor(dev_FFT020T_windSpeedAvg, "m/s", HaDeviceClass.NONE, send_only=True)
+dev_FFT020T_windSpeedGust = MqttDeviceSettings("FT020T Windspeed (Gust)", "FFT020T_windSpeedGust", client, dev_FT020T)
+sensor_FT020T_windSpeedGust = MqttSensor(dev_FFT020T_windSpeedGust, "m/s", HaDeviceClass.NONE, send_only=True)
+
+dev_SolarMAX = HaDevice("SolarMAX", "SolarMAX")
+dev_SolarMAX.add_config_option("manufacturer", "SwitchDoc Labs")
+dev_SolarMAX.add_config_option("model", "SwitchDoc Labs SolarMAX")
+dev_SolarMAX.add_config_option("sw_version", "15")
+dev_SolarMAX_batteryCurrent = MqttDeviceSettings("SolarMAX Battery Current", "SolarMAX_batteryCurrent", client, dev_SolarMAX)
+sensor_SolarMAX_batteryCurrent = MqttSensor(dev_SolarMAX_batteryCurrent, "mA", HaDeviceClass.CURRENT , send_only=True)
+dev_SolarMAX_batteryVoltage = MqttDeviceSettings("SolarMAX Battery Voltage", "SolarMAX_batteryVoltage", client, dev_SolarMAX)
+sensor_SolarMAX_batteryVoltage = MqttSensor(dev_SolarMAX_batteryVoltage, "V", HaDeviceClass.VOLTAGE, send_only=True)
+dev_SolarMAX_loadCurrent = MqttDeviceSettings("SolarMAX Load Current", "SolarMAX_loadCurrent", client, dev_SolarMAX)
+sensor_SolarMAX_loadCurrent = MqttSensor(dev_SolarMAX_loadCurrent, "mA", HaDeviceClass.CURRENT , send_only=True)
+dev_SolarMAX_loadVoltage = MqttDeviceSettings("SolarMAX Load Voltage", "SolarMAX_loadVoltage", client, dev_SolarMAX)
+sensor_SolarMAX_loadVoltage = MqttSensor(dev_SolarMAX_loadVoltage, "V", HaDeviceClass.VOLTAGE, send_only=True)
+dev_SolarMAX_solarCurrent = MqttDeviceSettings("SolarMAX Solar Current", "SolarMAX_solarCurrent", client, dev_SolarMAX)
+sensor_SolarMAX_solarCurrent = MqttSensor(dev_SolarMAX_solarCurrent, "mA", HaDeviceClass.CURRENT , send_only=True)
+dev_SolarMAX_solarVoltage = MqttDeviceSettings("SolarMAX Solar Voltage", "SolarMAX_solarVoltage", client, dev_SolarMAX)
+sensor_SolarMAX_solarVoltage = MqttSensor(dev_SolarMAX_solarVoltage, "V", HaDeviceClass.VOLTAGE, send_only=True)
+dev_SolarMAX_internalHumidity = MqttDeviceSettings("SolarMAX Internal Humidity", "SolarMAX_internalHumidity", client, dev_SolarMAX)
+sensor_SolarMAX_internalHumidity = MqttSensor(dev_SolarMAX_internalHumidity, "%", HaDeviceClass.HUMIDITY , send_only=True)
+dev_SolarMAX_internalTemperature = MqttDeviceSettings("SolarMAX Internal Temperature", "SolarMAX_internalTemperature", client, dev_SolarMAX)
+sensor_SolarMAX_internalTemperature = MqttSensor(dev_SolarMAX_internalTemperature, "°C", HaDeviceClass.TEMPERATURE, send_only=True)
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -92,23 +160,8 @@ def mqtt_publish_single(message, topic):
 # process functions
 import gpiozero
 
-# create device info dictionary
-weatherstation_ft020t = HaDevice("FT020T", "FT020T-weatherstation")
-# thermo_f016th_1 = HaDevice("F016TH Channel 1", "FT016TH-thermometer-01")
-thermo_f016th_2 = HaDevice("F016TH Channel 2", "FT016TH-thermometer-02")
-
-
-dev_F016TH_ch1 = HaDevice("F016TH_1", "Indoor Sensor 1")
-dev_F016TH_ch1.add_config_option("manufacturer", "SwitchDoc Labs")
-dev_F016TH_ch1.add_config_option("model", "F016TH")
-dev_F016TH_ch1.add_config_option("softwareversion", "1.0.0")
-dev_F016TH_ch1_humidity = MqttDeviceSettings("F016TH_ch1_humidity", "hF016TH_ch1_humidityum1", mqttc, dev_F016TH_ch1)
-dev_F016TH_ch1_temperature = MqttDeviceSettings("F016TH_ch1_temperature", "F016TH_ch1_temperature", mqttc, dev_F016TH_ch1)
-sensor_F016TH_ch1_humidity = MqttSensor(dev_F016TH_ch1_humidity, "%", HaDeviceClass.HUMIDITY)
-sensor_F016TH_ch1_temperature = MqttSensor(dev_F016TH_ch1_temperature, "°C", HaDeviceClass.TEMPERATURE)
-
-
 def processFT020T(sLine, lastFT020TTimeStamp, ReadingCount):
+    
     if (config.SWDEBUG):
         sys.stdout.write("processing FT020T Data\n")
         sys.stdout.write('This is the raw data: ' + sLine + '\n')
@@ -119,12 +172,14 @@ def processFT020T(sLine, lastFT020TTimeStamp, ReadingCount):
     if (config.enable_MQTT == True):
         mqtt_publish_single(sLine, "FT020T")
 
+
+
     if (lastFT020TTimeStamp == var["time"]):
         # duplicate
         if (config.SWDEBUG):
             sys.stdout.write("duplicate found\n")
-
         return ""
+    
     lastFT0202TTimeStamp = var["time"]
 
     # now check for adding record
@@ -133,7 +188,6 @@ def processFT020T(sLine, lastFT020TTimeStamp, ReadingCount):
         # skip write to database 
         if (config.SWDEBUG):
             sys.stdout.write("skipping write to database \n")
-
         return ""
 
     # outside temperature and Humidity
@@ -197,6 +251,17 @@ def processFT020T(sLine, lastFT020TTimeStamp, ReadingCount):
     BarometricPressureSeaLevel = 0.0
     BarometricTemperature = 0.0
 
+    if (config.enable_HA_discovery == True):
+        sensor_FT020T_batteryState.publish_state(BatteryOK)
+        sensor_FT020T_cumulativeRain.publish_state(TotalRain)
+        sensor_FT020T_humidity.publish_state(OutdoorHumidity)
+        sensor_FT020T_light.publish_state(SunlightVisible)
+        sensor_FT020T_temperature.publish_state(OutdoorTemperature)
+        sensor_FT020T_uv.publish_state(SunlightUVIndex)
+        sensor_FT020T_windDirection.publish_state(WindDirection)
+        sensor_FT020T_windSpeedAvg.publish_state(WindSpeed)
+        sensor_FT020T_windSpeedGust.publish_state(WindGust)
+
     if (config.enable_MySQL_Logging == True):
         # open mysql database
         # write log
@@ -236,16 +301,17 @@ def processFT020T(sLine, lastFT020TTimeStamp, ReadingCount):
 
             del cur
             del con
+            
     return lastFT0202TTimeStamp
 
 
 # processes Inside Temperature and Humidity
 def processF016TH(sLine, ReadingCountArray):
+
     if (config.SWDEBUG):
         sys.stdout.write('Processing F016TH data' + '\n')
         sys.stdout.write('This is the raw data: ' + sLine + '\n')
         if config.SWDEBUG:
-        
             print(ReadingCountArray)
 
     var = json.loads(sLine)
@@ -255,10 +321,16 @@ def processF016TH(sLine, ReadingCountArray):
 
     if (config.enable_MQTT == True):
         mqtt_publish_single(sLine, '/'.join(["F016TH", str(var["channel"])]))
+
+    if (config.enable_HA_discovery == True):    
         channel = var["channel"]
+        sys.stdout.write('Channel ' + str(channel) + '\n')
         if (channel == 1):
             sensor_F016TH_ch1_humidity.publish_state(var["humidity"])
             sensor_F016TH_ch1_temperature.publish_state(IndoorTemperature)
+        if (channel == 2):
+            sensor_F016TH_ch2_humidity.publish_state(var["humidity"])
+            sensor_F016TH_ch2_temperature.publish_state(IndoorTemperature)
 
     lastIndoorReading = nowStr()
 
@@ -278,7 +350,6 @@ def processF016TH(sLine, ReadingCountArray):
     # increment ReadingCountArray
     # ReadingCountArray[var["channel"]] = ReadingCountArray[var["channel"]] + 1
     ReadingCountArray[chan_array_pos] += 1
-
 
     if (config.enable_MySQL_Logging == True):
         # open mysql database
@@ -635,9 +706,11 @@ def processWeatherSenseAQI(sLine):
 
 
 def processSolarMAX(sLine):
+    
     state = json.loads(sLine)
+
     if (config.SWDEBUG):
-        sys.stdout.write("processing SolarMAX Data\n")
+        sys.stdout.write("Processing SolarMAX Data\n")
         sys.stdout.write('This is the raw data: ' + sLine + '\n')
 
     # only accept SolarMAX Protocols (8,10,11)
@@ -645,7 +718,17 @@ def processSolarMAX(sLine):
     if ((myProtocol == 8) or (myProtocol == 10) or (myProtocol == 11)):
 
         if (config.enable_MQTT == True):
-            mqtt_publish_single(sLine, "WSSolarMAX")
+            mqtt_publish_single(sLine, "SolarMAX")
+            
+        if (config.enable_HA_discovery == True):
+            sensor_SolarMAX_batteryCurrent.publish_state(state["batterycurrent"])
+            sensor_SolarMAX_batteryVoltage.publish_state(state["batteryvoltage"])
+            sensor_SolarMAX_loadCurrent.publish_state(state["loadcurrent"])
+            sensor_SolarMAX_loadVoltage.publish_state(state["loadvoltage"])
+            sensor_SolarMAX_solarCurrent.publish_state(state["solarpanelcurrent"])
+            sensor_SolarMAX_solarVoltage.publish_state(state["solarpanelvoltage"])
+            sensor_SolarMAX_internalHumidity.publish_state(state["internalhumidity"])
+            sensor_SolarMAX_internalTemperature.publish_state(state["internaltemperature"])
 
         if (config.enable_MySQL_Logging == True):
             # open mysql database

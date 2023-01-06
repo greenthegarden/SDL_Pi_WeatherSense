@@ -155,4 +155,5 @@ password: homeassistant
 Portential libraries (https://github.com/topics/mqtt-discovery)
 
 * https://github.com/alphonse82/homeassistant-mqtt-devices
+* https://gitlab.com/anphi/homeassistant-mqtt-binding
 * https://github.com/unixorn/ha-mqtt-discovery

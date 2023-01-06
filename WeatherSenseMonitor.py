@@ -2,7 +2,9 @@ from __future__ import print_function
 # import state
 import sys
 # from datetime import datetime
+
 SOFTWAREVERSION = "V016"
+
 import wirelessSensors
 import MySQLdb as mdb
 
@@ -13,12 +15,48 @@ import apscheduler.events
 import SkyCamRemote
 import PictureManagement
 # Check for user imports
+
 try:
     import conflocal as config
 except ImportError:
     import config
 
 import traceback
+
+
+# from paho.mqtt import publish
+# from paho.mqtt.client import Client
+
+# # The callback for when the client receives a CONNACK response from the server.
+# def on_connect(client, userdata, flags, rc):
+#     print("Connected with result code "+str(rc))
+
+# # instantiate an paho mqtt client and connect to the mqtt server
+# client = Client("WeatherSenseMonitor")
+# client.on_connect = on_connect
+# client.connect("emqx.home-assistant.localdomain", 1883)
+# client.loop_start()
+
+# from ha_mqtt.ha_device import HaDevice
+# from ha_mqtt.mqtt_device_base import MqttDeviceBase, MqttDeviceSettings
+# from ha_mqtt.mqtt_sensor import MqttSensor
+# from ha_mqtt.mqtt_thermometer import MqttThermometer
+# from ha_mqtt.util import HaDeviceClass
+
+# # create device info dictionary
+# # weatherstation_ft020t = HaDevice("FT020T", "FT020T-weatherstation", send_only=True)
+# # # thermo_f016th_1 = HaDevice("F016TH Channel 1", "FT016TH-thermometer-01")
+# # thermo_f016th_2 = HaDevice("F016TH Channel 2", "FT016TH-thermometer-02")
+
+# dev_F016TH_ch1 = HaDevice("F016TH_1", "F016TH_ch1")
+# dev_F016TH_ch1.add_config_option("manufacturer", "SwitchDoc Labs")
+# dev_F016TH_ch1.add_config_option("model", "F016TH")
+# dev_F016TH_ch1.add_config_option("softwareversion", "1.0.0")
+# dev_F016TH_ch1_humidity = MqttDeviceSettings("F016TH_ch1_humidity", "F016TH_ch1_humidity", client, dev_F016TH_ch1)
+# dev_F016TH_ch1_temperature = MqttDeviceSettings("F016TH_ch1_temperature", "F016TH_ch1_temperature", client, dev_F016TH_ch1)
+# sensor_F016TH_ch1_humidity = MqttSensor(dev_F016TH_ch1_humidity, "%", HaDeviceClass.HUMIDITY, send_only=True)
+# sensor_F016TH_ch1_temperature = MqttSensor(dev_F016TH_ch1_temperature, "°C", HaDeviceClass.TEMPERATURE, send_only=True)
+
 
 if (config.enable_MySQL_Logging == True):
     # WeatherSense SQL Database
@@ -110,6 +148,10 @@ if (config.enable_SkyCamRemote == True):
 
 scheduler.print_jobs()
 
+# Create Devices
+
+
+
 # start scheduler
 scheduler.start()
 print("-----------------")
@@ -122,7 +164,13 @@ print("-----------------")
 
 # Main Loop
 
-while True:
-
-    time.sleep(1.0)
-
+try:
+    while True:
+        time.sleep(1.0)
+except KeyboardInterrupt:
+    pass
+finally:
+    # close the device for cleanup. Gets marked as offline/unavailable in homeassistant
+    # th.close()
+    client.loop_stop()
+    client.disconnect()
