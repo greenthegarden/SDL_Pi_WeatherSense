@@ -245,7 +245,7 @@ def processFT020T(sLine, lastFT020TTimeStamp, ReadingCount):
         BatteryLevel = 100
     else:
         BatteryOK = "LOW"
-        BatteryLevel = 50
+        BatteryLevel = 0
 
     # SkyWeather2 Compatiblity
     AQI = 0
@@ -332,7 +332,7 @@ def processF016TH(sLine, ReadingCountArray):
         batteryLevel = 100
     else:
         batteryState = "LOW"
-        batteryLevel = 50
+        batteryLevel = 0
 
     if (config.enable_HA_discovery == True):    
         channel = var["channel"]
