@@ -48,14 +48,18 @@ from ha_mqtt.util import HaDeviceClass
 dev_F016TH_ch1 = HaDevice("F016TH Channel 1", "F016TH_ch1")
 dev_F016TH_ch1.add_config_option("manufacturer", "SwitchDoc Labs")
 dev_F016TH_ch1.add_config_option("model", "SwitchDoc Labs F016TH Thermo-Hygrometer")
+dev_F016TH_ch1_batteryState = MqttDeviceSettings("F016TH Channel 1 Battery State", "F016TH_ch1_batteryState", client, dev_F016TH_ch1)
+sensor_F016TH_ch1_batteryState = MqttSensor(dev_F016TH_ch1_batteryState, "", HaDeviceClass.BATTERY, send_only=True)
 dev_F016TH_ch1_humidity = MqttDeviceSettings("F016TH Channel 1 Humidity", "F016TH_ch1_humidity", client, dev_F016TH_ch1)
-dev_F016TH_ch1_temperature = MqttDeviceSettings("F016TH Channel 1 Temperature", "F016TH_ch1_temperature", client, dev_F016TH_ch1)
 sensor_F016TH_ch1_humidity = MqttSensor(dev_F016TH_ch1_humidity, "%", HaDeviceClass.HUMIDITY, send_only=True)
+dev_F016TH_ch1_temperature = MqttDeviceSettings("F016TH Channel 1 Temperature", "F016TH_ch1_temperature", client, dev_F016TH_ch1)
 sensor_F016TH_ch1_temperature = MqttSensor(dev_F016TH_ch1_temperature, "°C", HaDeviceClass.TEMPERATURE, send_only=True)
 
 dev_F016TH_ch2 = HaDevice("F016TH Channel 2", "F016TH_ch2")
 dev_F016TH_ch2.add_config_option("manufacturer", "SwitchDoc Labs")
 dev_F016TH_ch2.add_config_option("model", "SwitchDoc Labs F016TH Thermo-Hygrometer")
+dev_F016TH_ch2_batteryState = MqttDeviceSettings("F016TH Channel 2 Battery State", "F016TH_ch2_batteryState", client, dev_F016TH_ch2)
+sensor_F016TH_ch2_batteryState = MqttSensor(dev_F016TH_ch2_batteryState, "", HaDeviceClass.BATTERY, send_only=True)
 dev_F016TH_ch2_humidity = MqttDeviceSettings("F016TH Channel 2 Humidity", "F016TH_ch2_humidity", client, dev_F016TH_ch2)
 sensor_F016TH_ch2_humidity = MqttSensor(dev_F016TH_ch2_humidity, "%", HaDeviceClass.HUMIDITY, send_only=True)
 dev_F016TH_ch2_temperature = MqttDeviceSettings("F016TH Channel 2 Temperature", "F016TH_ch2_temperature", client, dev_F016TH_ch2)
@@ -64,10 +68,10 @@ sensor_F016TH_ch2_temperature = MqttSensor(dev_F016TH_ch2_temperature, "°C", Ha
 dev_FT020T = HaDevice("FT020T", "FT020T")
 dev_FT020T.add_config_option("manufacturer", "SwitchDoc Labs")
 dev_FT020T.add_config_option("model", "SwitchDoc Labs FT020T AIO")
-dev_FFT020T_batteryState = MqttDeviceSettings("FT020T Battery State", "FFT020T_batteryState", client, dev_FT020T)
-sensor_FT020T_batteryState = MqttSensor(dev_FFT020T_batteryState, "", HaDeviceClass.NONE, send_only=True)
-dev_FFT020T_cumulativeRain = MqttDeviceSettings("FT020T Cumulative Rain", "FFT020T_cumulativeRain", client, dev_FT020T)
-sensor_FT020T_cumulativeRain = MqttSensor(dev_FFT020T_cumulativeRain, "mm", HaDeviceClass.NONE, send_only=True)
+dev_FT020T_batteryState = MqttDeviceSettings("FT020T Battery State", "FT020T_batteryState", client, dev_FT020T)
+sensor_FT020T_batteryState = MqttSensor(dev_FT020T_batteryState, "", HaDeviceClass.BATTERY, send_only=True)
+dev_FT020T_cumulativeRain = MqttDeviceSettings("FT020T Cumulative Rain", "FT020T_cumulativeRain", client, dev_FT020T)
+sensor_FT020T_cumulativeRain = MqttSensor(dev_FT020T_cumulativeRain, "mm", HaDeviceClass.NONE, send_only=True)
 dev_FT020T_humidity = MqttDeviceSettings("FT020T Humidity", "FT020T_humidity", client, dev_FT020T)
 sensor_FT020T_humidity = MqttSensor(dev_FT020T_humidity, "%", HaDeviceClass.HUMIDITY, send_only=True)
 dev_FT020T_light = MqttDeviceSettings("FT020T Light", "FT020T_light", client, dev_FT020T)
@@ -76,12 +80,12 @@ dev_FT020T_temperature = MqttDeviceSettings("FT020T Temperature", "FT020T_temper
 sensor_FT020T_temperature = MqttSensor(dev_FT020T_temperature, "°C", HaDeviceClass.TEMPERATURE, send_only=True)
 dev_FT020T_uv = MqttDeviceSettings("FT020T UV", "FT020T_uv", client, dev_FT020T)
 sensor_FT020T_uv = MqttSensor(dev_FT020T_uv, "", HaDeviceClass.NONE, send_only=True)
-dev_FFT020T_windDirection = MqttDeviceSettings("FT020T Wind Direction", "FFT020T_windDirection", client, dev_FT020T)
-sensor_FT020T_windDirection = MqttSensor(dev_FFT020T_windDirection, "°", HaDeviceClass.NONE, send_only=True)
-dev_FFT020T_windSpeedAvg = MqttDeviceSettings("FT020T Windspeed (Avg)", "FFT020T_windSpeedAvg", client, dev_FT020T)
-sensor_FT020T_windSpeedAvg = MqttSensor(dev_FFT020T_windSpeedAvg, "m/s", HaDeviceClass.NONE, send_only=True)
-dev_FFT020T_windSpeedGust = MqttDeviceSettings("FT020T Windspeed (Gust)", "FFT020T_windSpeedGust", client, dev_FT020T)
-sensor_FT020T_windSpeedGust = MqttSensor(dev_FFT020T_windSpeedGust, "m/s", HaDeviceClass.NONE, send_only=True)
+dev_FT020T_windDirection = MqttDeviceSettings("FT020T Wind Direction", "FT020T_windDirection", client, dev_FT020T)
+sensor_FT020T_windDirection = MqttSensor(dev_FT020T_windDirection, "°", HaDeviceClass.NONE, send_only=True)
+dev_FT020T_windSpeedAvg = MqttDeviceSettings("FT020T Windspeed (Avg)", "FT020T_windSpeedAvg", client, dev_FT020T)
+sensor_FT020T_windSpeedAvg = MqttSensor(dev_FT020T_windSpeedAvg, "m/s", HaDeviceClass.WIND_SPEED, send_only=True)
+dev_FT020T_windSpeedGust = MqttDeviceSettings("FT020T Windspeed (Gust)", "FT020T_windSpeedGust", client, dev_FT020T)
+sensor_FT020T_windSpeedGust = MqttSensor(dev_FT020T_windSpeedGust, "m/s", HaDeviceClass.WIND_SPEED, send_only=True)
 
 dev_SolarMAX = HaDevice("SolarMAX", "SolarMAX")
 dev_SolarMAX.add_config_option("manufacturer", "SwitchDoc Labs")
@@ -171,7 +175,6 @@ def processFT020T(sLine, lastFT020TTimeStamp, ReadingCount):
 
     if (config.enable_MQTT == True):
         mqtt_publish_single(sLine, "FT020T")
-
 
 
     if (lastFT020TTimeStamp == var["time"]):
@@ -316,19 +319,21 @@ def processF016TH(sLine, ReadingCountArray):
 
     var = json.loads(sLine)
     
-    IndoorTemperature = round(((var["temperature_F"] - 32.0) / (9.0 / 5.0)), 2)
-    #IndoorTemperature = var["temperature_F"]
-
     if (config.enable_MQTT == True):
         mqtt_publish_single(sLine, '/'.join(["F016TH", str(var["channel"])]))
+
+    IndoorTemperature = round(((var["temperature_F"] - 32.0) / (9.0 / 5.0)), 2)
+    #IndoorTemperature = var["temperature_F"]
 
     if (config.enable_HA_discovery == True):    
         channel = var["channel"]
         sys.stdout.write('Channel ' + str(channel) + '\n')
         if (channel == 1):
+            sensor_F016TH_ch1_batteryState.publish_state(var["battery"])
             sensor_F016TH_ch1_humidity.publish_state(var["humidity"])
             sensor_F016TH_ch1_temperature.publish_state(IndoorTemperature)
         if (channel == 2):
+            sensor_F016TH_ch2_batteryState.publish_state(var["battery"])
             sensor_F016TH_ch2_humidity.publish_state(var["humidity"])
             sensor_F016TH_ch2_temperature.publish_state(IndoorTemperature)
 
