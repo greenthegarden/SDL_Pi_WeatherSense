@@ -87,6 +87,37 @@ sensor_FT020T_windSpeedAvg = MqttSensor(dev_FT020T_windSpeedAvg, "m/s", HaDevice
 dev_FT020T_windSpeedGust = MqttDeviceSettings("FT020T Windspeed (Gust)", "FT020T_windSpeedGust", client, dev_FT020T)
 sensor_FT020T_windSpeedGust = MqttSensor(dev_FT020T_windSpeedGust, "m/s", HaDeviceClass.WIND_SPEED, send_only=True)
 
+dev_WeatherSenseAQI = HaDevice("WeatherSense Air Quality Sensor", "WeatherSenseAQI")
+dev_WeatherSenseAQI.add_config_option("manufacturer", "SwitchDoc Labs")
+dev_WeatherSenseAQI.add_config_option("model", "SwitchDoc Labs AQI")
+dev_WeatherSenseAQI.add_config_option("sw_version", "3")
+dev_WeatherSenseAQI_1_0_micron_particles_standard = MqttDeviceSettings("WeatherSenseAQI 1.0 micron particles (Standard)", "WeatherSenseAQI_1_0_micron_particles_standard", client, dev_WeatherSenseAQI)
+sensor_WeatherSenseAQI_1_0_micron_particles_standard = MqttSensor(dev_WeatherSenseAQI_1_0_micron_particles_standard, "µg/m³", HaDeviceClass.PM1, send_only=True)
+dev_WeatherSenseAQI_2_5_micron_particles_standard = MqttDeviceSettings("WeatherSenseAQI 2.5 micron particles (Standard)", "WeatherSenseAQI_2_5_micron_particles_standard", client, dev_WeatherSenseAQI)
+sensor_WeatherSenseAQI_2_5_micron_particles_standard = MqttSensor(dev_WeatherSenseAQI_2_5_micron_particles_standard, "µg/m³", HaDeviceClass.PM25, send_only=True)
+dev_WeatherSenseAQI_10_micron_particles_standard = MqttDeviceSettings("WeatherSenseAQI 10 micron particles (Standard)", "WeatherSenseAQI_10_micron_particles_standard", client, dev_WeatherSenseAQI)
+sensor_WeatherSenseAQI_10_micron_particles_standard = MqttSensor(dev_WeatherSenseAQI_10_micron_particles_standard, "µg/m³", HaDeviceClass.PM10, send_only=True)
+dev_WeatherSenseAQI_1_0_micron_particles_atmospheric = MqttDeviceSettings("WeatherSenseAQI 1.0 micron particles (Atmospheric)", "WeatherSenseAQI_1_0_micron_particles_atmospheric", client, dev_WeatherSenseAQI)
+sensor_WeatherSenseAQI_1_0_micron_particles_atmospheric = MqttSensor(dev_WeatherSenseAQI_1_0_micron_particles_atmospheric, "µg/m³", HaDeviceClass.PM1, send_only=True)
+dev_WeatherSenseAQI_2_5_micron_particles_atmospheric = MqttDeviceSettings("WeatherSenseAQI 2.5 micron particles (Atmospheric)", "WeatherSenseAQI_2_5_micron_particles_atmospheric", client, dev_WeatherSenseAQI)
+sensor_WeatherSenseAQI_2_5_micron_particles_atmospheric = MqttSensor(dev_WeatherSenseAQI_2_5_micron_particles_atmospheric, "µg/m³", HaDeviceClass.PM25, send_only=True)
+dev_WeatherSenseAQI_10_micron_particles_atmospheric = MqttDeviceSettings("WeatherSenseAQI 10 micron particles (Atmospheric)", "WeatherSenseAQI_10_micron_particles_atmospheric", client, dev_WeatherSenseAQI)
+sensor_WeatherSenseAQI_10_micron_particles_atmospheric = MqttSensor(dev_WeatherSenseAQI_10_micron_particles_atmospheric, "µg/m³", HaDeviceClass.PM10, send_only=True)
+dev_WeatherSenseAQI_AQI = MqttDeviceSettings("WeatherSenseAQI Air Quality Index", "WeatherSenseAQI_AQI", client, dev_WeatherSenseAQI)
+sensor_WeatherSenseAQI_AQI = MqttSensor(dev_WeatherSenseAQI_AQI, "", HaDeviceClass.NONE, send_only=True)
+dev_WeatherSenseAQI_batteryCurrent = MqttDeviceSettings("WeatherSenseAQI Battery Current", "WeatherSenseAQI_batteryCurrent", client, dev_WeatherSenseAQI)
+sensor_WeatherSenseAQI_batteryCurrent = MqttSensor(dev_WeatherSenseAQI_batteryCurrent, "mA", HaDeviceClass.CURRENT , send_only=True)
+dev_WeatherSenseAQI_batteryVoltage = MqttDeviceSettings("WeatherSenseAQI Battery Voltage", "WeatherSenseAQI_batteryVoltage", client, dev_WeatherSenseAQI)
+sensor_WeatherSenseAQI_batteryVoltage = MqttSensor(dev_WeatherSenseAQI_batteryVoltage, "V", HaDeviceClass.VOLTAGE, send_only=True)
+dev_WeatherSenseAQI_loadCurrent = MqttDeviceSettings("WeatherSenseAQI Load Current", "WeatherSenseAQI_loadCurrent", client, dev_WeatherSenseAQI)
+sensor_WeatherSenseAQI_loadCurrent = MqttSensor(dev_WeatherSenseAQI_loadCurrent, "mA", HaDeviceClass.CURRENT , send_only=True)
+dev_WeatherSenseAQI_loadVoltage = MqttDeviceSettings("WeatherSenseAQI Load Voltage", "WeatherSenseAQI_loadVoltage", client, dev_WeatherSenseAQI)
+sensor_WeatherSenseAQI_loadVoltage = MqttSensor(dev_WeatherSenseAQI_loadVoltage, "V", HaDeviceClass.VOLTAGE, send_only=True)
+dev_WeatherSenseAQI_solarCurrent = MqttDeviceSettings("WeatherSenseAQI Solar Current", "WeatherSenseAQI_solarCurrent", client, dev_WeatherSenseAQI)
+sensor_WeatherSenseAQI_solarCurrent = MqttSensor(dev_WeatherSenseAQI_solarCurrent, "mA", HaDeviceClass.CURRENT , send_only=True)
+dev_WeatherSenseAQI_solarVoltage = MqttDeviceSettings("WeatherSenseAQI Solar Voltage", "WeatherSenseAQI_solarVoltage", client, dev_WeatherSenseAQI)
+sensor_WeatherSenseAQI_solarVoltage = MqttSensor(dev_WeatherSenseAQI_solarVoltage, "V", HaDeviceClass.VOLTAGE, send_only=True)
+
 dev_SolarMAX = HaDevice("SolarMAX", "SolarMAX")
 dev_SolarMAX.add_config_option("manufacturer", "SwitchDoc Labs")
 dev_SolarMAX.add_config_option("model", "SwitchDoc Labs SolarMAX")
@@ -429,7 +460,6 @@ def processWeatherSenseRadiation(sLine):
     if (config.enable_MQTT == True):
         mqtt_publish_single(sLine, "WSRadiation")
 
-
     if (config.enable_MySQL_Logging == True):
         # open mysql database
         # write log
@@ -516,7 +546,6 @@ def processWeatherSenseAfterShock(sLine):
 
     if (config.enable_MQTT == True):
         mqtt_publish_single(sLine, "WSAfterShock")
-
 
     if (config.enable_MySQL_Logging == True):
         # open mysql database
@@ -640,6 +669,21 @@ def processWeatherSenseAQI(sLine):
 
     if (config.enable_MQTT == True):
         mqtt_publish_single(sLine, "WSAQI")
+        
+    if (config.enable_HA_discovery == True):
+        sensor_WeatherSenseAQI_1_0_micron_particles_standard.publish_state(state['PM1.0S'])
+        sensor_WeatherSenseAQI_2_5_micron_particles_standard.publish_state(state['PM2.5S'])
+        sensor_WeatherSenseAQI_10_micron_particles_standard.publish_state(state['PM10S'])
+        sensor_WeatherSenseAQI_1_0_micron_particles_atmospheric.publish_state(state['PM1.0A'])
+        sensor_WeatherSenseAQI_2_5_micron_particles_atmospheric.publish_state(state['PM2.5A'])
+        sensor_WeatherSenseAQI_10_micron_particles_atmospheric.publish_state(state['PM10A'])
+        sensor_WeatherSenseAQI_AQI.publish_state(state['AQI'])
+        sensor_WeatherSenseAQI_batteryCurrent.publish_state(state['batterycurrent'])
+        sensor_WeatherSenseAQI_batteryVoltage.publish_state(state['batteryvoltage'])
+        sensor_WeatherSenseAQI_loadCurrent.publish_state(state['loadcurrent'])
+        sensor_WeatherSenseAQI_loadVoltage.publish_state(state['loadvoltage'])
+        sensor_WeatherSenseAQI_solarCurrent.publish_state(state['solarpanelcurrent'])
+        sensor_WeatherSenseAQI_solarVoltage.publish_state(state['solarpanelvoltage'])
 
     if (config.enable_MySQL_Logging == True):
         # open mysql database
