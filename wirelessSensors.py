@@ -31,7 +31,7 @@ def on_connect(client, userdata, flags, rc):
 # instantiate an paho mqtt client and connect to the mqtt server
 client = Client("WeatherSenseMonitor")
 client.on_connect = on_connect
-client.connect("emqx.home-assistant.localdomain", 1883)
+client.connect("emqx.services.localdomain", 1883)
 client.loop_start()
 
 from ha_mqtt.ha_device import HaDevice
