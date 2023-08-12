@@ -34,13 +34,13 @@ enable_SkyCamRemote = False
 
 # configuration for MQTT
 
-enable_MQTT = False
-MQTThost = "emqx.services.localdomain"
+enable_MQTT = True
+MQTThost = "emqx.broker.localdomain"
 MQTTport = 1883
 MQTTqos = 0
 
 enable_HA_discovery = True
-MQTThost = "emqx.services.localdomain"
+MQTThost = "emqx.broker.localdomain"
 MQTTport = 1883
 MQTTqos = 0
 
