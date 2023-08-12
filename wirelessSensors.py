@@ -29,10 +29,10 @@ def on_connect(client, userdata, flags, rc):
     sys.stdout.write("Connected MQTT broker with result code " + str(rc) + "\n")
 
 # instantiate an paho mqtt client and connect to the mqtt server
-client = Client("WeatherSenseMonitor")
-client.on_connect = on_connect
-client.connect("emqx.broker.localdomain", 1883)
-client.loop_start()
+# client = Client("WeatherSenseMonitor")
+# client.on_connect = on_connect
+# client.connect("emqx.broker.localdomain", 1883)
+# client.loop_start()
 
 from ha_mqtt.ha_device import HaDevice
 from ha_mqtt.mqtt_device_base import MqttDeviceBase, MqttDeviceSettings
@@ -143,7 +143,7 @@ sensor_SolarMAX_internalTemperature = MqttSensor(dev_SolarMAX_internalTemperatur
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # cmd = [ '/usr/local/bin/rtl_433', '-q', '-F', 'json', '-R', '147']
-cmd = ['/usr/local/bin/rtl_433', '-q', '-F', 'json', '-R', '146', '-R', '147', '-R', '148', '-R', '150', '-R', '151', '-R', '152', '-R', '153']
+cmd = ['/usr/local/bin/rtl_433', '-F', 'json', '-R', '146', '-R', '147', '-R', '148', '-R', '150', '-R', '151', '-R', '152', '-R', '153']
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -189,7 +189,7 @@ def mqtt_publish_single(message, topic):
         )
     except:
         traceback.print_exc()
-        sys.stdout.write('Mosquitto not available\n')
+        sys.stdout.write('MQTT Broker not available\n')
 
 
 # process functions
@@ -527,11 +527,7 @@ def processWeatherSenseRadiation(sLine):
             updateWeb.update_SafeCast(CPM, uSVh)
             updateWeb.update_RadMon(CPM)
             updateWeb.update_GMCMap(CPM, uSVh)
-
             
-
-
-
     return
 
 # processes AfterShock Packets 
@@ -596,8 +592,6 @@ def processWeatherSenseAfterShock(sLine):
 
     return
 
-
-
 def processWeatherSenseTB(sLine):
     # weathersense protocol 16
     state = json.loads(sLine)
@@ -657,7 +651,6 @@ def processWeatherSenseTB(sLine):
             del con
 
     return
-
 
 def processWeatherSenseAQI(sLine):
     # weathersense protocol 15
@@ -762,7 +755,6 @@ def processWeatherSenseAQI(sLine):
 
     return
 
-
 def processSolarMAX(sLine):
     
     state = json.loads(sLine)
@@ -834,7 +826,6 @@ def processSolarMAX(sLine):
                 del con
 
     return
-
 
 # main read 433HMz Sensor Loop
 def readSensors():
@@ -908,7 +899,3 @@ def readSensors():
                 processWeatherSenseRadiation(sLine)
 
         sys.stdout.flush()
-
-
-
-
