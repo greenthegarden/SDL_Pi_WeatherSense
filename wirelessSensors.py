@@ -26,7 +26,7 @@ from paho.mqtt.client import Client
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code " + str(rc))
+    sys.stdout.write("Connected MQTT broker with result code " + str(rc))
 
 # instantiate an paho mqtt client and connect to the mqtt server
 client = Client("WeatherSenseMonitor")
