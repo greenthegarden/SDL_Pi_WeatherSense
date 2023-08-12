@@ -26,7 +26,7 @@ from paho.mqtt.client import Client
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
-    sys.stdout.write("Connected MQTT broker with result code " + str(rc))
+    sys.stdout.write("Connected MQTT broker with result code " + str(rc) + "\n")
 
 # instantiate an paho mqtt client and connect to the mqtt server
 client = Client("WeatherSenseMonitor")
@@ -189,7 +189,7 @@ def mqtt_publish_single(message, topic):
         )
     except:
         traceback.print_exc()
-        print('Mosquitto not available')
+        sys.stdout.write('Mosquitto not available\n')
 
 
 # process functions
@@ -871,7 +871,7 @@ def readSensors():
         
         try:
             src, line = q.get(timeout=1)
-            # print(line.decode())
+            sys.stdout.write(line.decode() + "\n")
         except Empty:
             pulse += 1
         else:  # got line
