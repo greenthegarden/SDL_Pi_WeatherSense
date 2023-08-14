@@ -29,10 +29,10 @@ def on_connect(client, userdata, flags, rc):
     sys.stdout.write("Connected MQTT broker with result code " + str(rc) + "\n")
 
 # instantiate an paho mqtt client and connect to the mqtt server
-# client = Client("WeatherSenseMonitor")
-# client.on_connect = on_connect
-# client.connect("emqx.broker.localdomain", 1883)
-# client.loop_start()
+client = Client("WeatherSenseMonitor")
+client.on_connect = on_connect
+client.connect(config.MQTThost, config.MQTTport)
+client.loop_start()
 
 from ha_mqtt.ha_device import HaDevice
 from ha_mqtt.mqtt_device_base import MqttDeviceBase, MqttDeviceSettings
@@ -139,6 +139,7 @@ sensor_SolarMAX_internalHumidity = MqttSensor(dev_SolarMAX_internalHumidity, "%"
 dev_SolarMAX_internalTemperature = MqttDeviceSettings("SolarMAX Internal Temperature", "SolarMAX_internalTemperature", client, dev_SolarMAX)
 sensor_SolarMAX_internalTemperature = MqttSensor(dev_SolarMAX_internalTemperature, "°C", HaDeviceClass.TEMPERATURE, send_only=True)
 
+# client.disconnect()
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -353,6 +354,7 @@ def processF016TH(sLine, ReadingCountArray):
     var = json.loads(sLine)
     
     if (config.enable_MQTT == True):
+        sys.stdout.write('Publishing via MQTT\n')
         mqtt_publish_single(sLine, '/'.join(["F016TH", str(var["channel"])]))
 
     IndoorTemperature = round(((var["temperature_F"] - 32.0) / (9.0 / 5.0)), 2)

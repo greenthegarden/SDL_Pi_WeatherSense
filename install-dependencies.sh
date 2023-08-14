@@ -22,7 +22,6 @@ sudo make install
 cd $CWD
 }
 
-#install_rtl433
 
 install_mqsql () {
 # install mysql and create database
@@ -32,6 +31,7 @@ sudo python3 -m pip install mysqlclient
 sudo mysql -u root -p < WeatherSenseWireless.sql
 }
 
+install_rtl433
 # install python dependencies
 sudo apt-get install -y libopenjp2-7
 sudo python3 -m pip install -r requirements.txt

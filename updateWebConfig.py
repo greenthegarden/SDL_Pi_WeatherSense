@@ -1,9 +1,5 @@
 # configure Web updates
 
-
-
-
-
 ###############
 # RadSense Configuration
 ###############
@@ -15,19 +11,16 @@ RADLONGITUDE=-117.18482279369067
 
 RADLOCATIONNAME= "SwitchDoc Labs, Spokane Valley, WA, USA"
 RADHEIGHTINMETERS = 615
+
 #radmon.org
-
-
 
 RADMONIPADDRESS="radmon.org"
 RADMONUSER=""
 RADMONPASSWORD="yourpasswword"
 
-
 #safecase
 
 SAFECASTAPI=""
-
 
 #GMCMap.com
 

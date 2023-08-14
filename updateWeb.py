@@ -11,7 +11,6 @@ except:
     import updateWebConfig
     print ("using updateWebConfig")
 
-    
 import requests
 import config
 
@@ -25,23 +24,20 @@ import datetime
 safecast = SafecastPy.SafecastPy(
   api_key=updateWebConfig.SAFECASTAPI)
 
-
-
-
 def sendCommandToIP(myIP, myCommand):
-        myURL = 'http://'+myIP+'/'+myCommand
+    myURL = 'http://'+myIP+'/'+myCommand
 
-        try:
-                if (config.SWDEBUG):
-                    print("myURL=", myURL)
-                req = requests.get(myURL,timeout=5)
+    try:
+        if (config.SWDEBUG):
+            print("myURL=", myURL)
+        req = requests.get(myURL,timeout=5)
 
-                returnReq = req
+        returnReq = req
 
-        except Exception:
-                traceback.print_exc()
-                return 
-        return returnReq
+    except Exception:
+        traceback.print_exc()
+        return 
+    return returnReq
 
 
 def update_SafeCast(CPM, uSVh):
@@ -93,17 +89,13 @@ def update_RadMon(CPM):
         print("myCommand=", myCommand)
         response = sendCommandToIP(updateWebConfig.RADMONIPADDRESS, myCommand) 
         print("response=", response)
-        pass
+    pass
 
 def update_GMCMap(CPM, uSVh):
    
-
     if (updateWebConfig.GMCMAPUSERACCOUNTID != ""):
-
         myCommand = "log2.asp?AID="+updateWebConfig.GMCMAPUSERACCOUNTID+"&GID="+updateWebConfig.GMCMAPGEIGERCOUNTERID+"&CPM="+str(CPM)+"&uSV="+str(uSVh)
         print("myCommand=", myCommand)
         response = sendCommandToIP(updateWebConfig.GMCMAPIPADDRESS, myCommand) 
         print("response=", response)
-    
-
     pass

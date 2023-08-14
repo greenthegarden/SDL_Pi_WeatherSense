@@ -8,9 +8,9 @@ import RPi.GPIO as GPIO
 
 # Check for user imports
 try:
-                import conflocal as config
+    import conflocal as config
 except ImportError:
-                import config
+    import config
 
 GPIO.setmode(GPIO.BCM)
 
@@ -20,12 +20,9 @@ GPIO.setmode(GPIO.BCM)
 
 GROVEPOWERSAVEPIN = 12
 
-
-
 ################
 # Unit Conversion
 ################
-# 
 
 def returnTemperatureCF(temperature):
 	if (state.EnglishMetric == True):
@@ -39,14 +36,14 @@ def returnTemperatureCFUnit():
 		# return Metric 
 		return "C"
 	else:
-		return  "F"
+		return "F"
 
 def returnWindSpeedUnit():
 	if (state.EnglishMetric == True):
 		# return Metric 
 		return "KPH"
 	else:
-		return  "MPH"
+		return "MPH"
 
 def returnWindSpeed(wind):
 	if (state.EnglishMetric == True):
@@ -54,7 +51,6 @@ def returnWindSpeed(wind):
 		return wind
 	else:
 		return wind/1.6
-
 
 def returnWindDirection(windDirection):
 
@@ -90,11 +86,6 @@ def returnWindDirection(windDirection):
         return "NNE"
     return "N"
 
-
-
-
-
-
 def returnPercentLeftInBattery(currentVoltage, maxVolt):
 
     if (maxVolt > 11):
@@ -103,15 +94,12 @@ def returnPercentLeftInBattery(currentVoltage, maxVolt):
             returnPercent = 100.0
         if (returnPercent < 0.0):
             returnPercent = 0.0
-
         return returnPercent
     else:
-
         scaledVolts = old_div(currentVoltage, maxVolt)
 
         if (scaledVolts > 1.0):
                 scaledVolts = 1.0
-
 
         if (scaledVolts > .9686):
                 returnPercent = 10*(1-old_div((1.0-scaledVolts),(1.0-.9686)))+90
@@ -120,7 +108,6 @@ def returnPercentLeftInBattery(currentVoltage, maxVolt):
         if (scaledVolts > 0.9374):
                 returnPercent = 10*(1-old_div((0.9686-scaledVolts),(0.9686-0.9374)))+80
                 return returnPercent
-
 
         if (scaledVolts > 0.9063):
                 returnPercent = 30*(1-old_div((0.9374-scaledVolts),(0.9374-0.9063)))+50
@@ -131,23 +118,16 @@ def returnPercentLeftInBattery(currentVoltage, maxVolt):
 
                 return returnPercent
 
-
         if (scaledVolts > 0.8437):
                 returnPercent = 15*(1-old_div((0.8437-scaledVolts),(0.8749-0.8437)))+1
                 return returnPercent
 
-
         if (scaledVolts > 0.8126):
                 returnPercent = 7*(1-old_div((0.8126-scaledVolts),(0.8437-0.8126)))+2
                 return returnPercent
-
-
 
         if (scaledVolts > 0.7812):
                 returnPercent = 4*(1-old_div((0.7812-scaledVolts),(0.8126-0.7812)))+1
                 return returnPercent
 
         return 0
-
-
-
