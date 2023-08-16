@@ -2,9 +2,13 @@ from __future__ import print_function
 # import state
 import sys
 # from datetime import datetime
+<<<<<<< HEAD
 
 SOFTWAREVERSION = "V016"
 
+=======
+SOFTWAREVERSION = "V018"
+>>>>>>> upstream/main
 import wirelessSensors
 import MySQLdb as mdb
 
