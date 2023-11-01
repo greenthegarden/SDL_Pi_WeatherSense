@@ -467,7 +467,7 @@ def processFT020T(sLine, lastFT020TTimeStamp, ReadingCount):
     mainID = var["id"]
     lastMainReading = nowStr()
 
-    wTemp = var["temperature"]
+    wTemp = var["temperature_F"]
 
     ucHumi = var["humidity"]
 
@@ -491,14 +491,14 @@ def processFT020T(sLine, lastFT020TTimeStamp, ReadingCount):
     #OutdoorTemperature = round(wTemp, 2)
     OutdoorHumidity = ucHumi
 
-    WindSpeed = round(var["avewindspeed"] / 10.0, 1)
-    WindGust = round(var["gustwindspeed"] / 10.0, 1)
-    WindDirection = var["winddirection"]
+    WindSpeed = round(var["wind_avg_m_s"] / 10.0, 1)
+    WindGust = round(var["wind_max_m_s"] / 10.0, 1)
+    WindDirection = var["wind_dir_deg"]
 
-    TotalRain = round(var["cumulativerain"] / 10.0, 1)
+    TotalRain = round(var["rain_mm"] / 10.0, 1)
     Rain60Minutes = 0.0
 
-    wLight = var["light"]
+    wLight = var["light_lux"]
     #if (wLight >= 0x1fffa):
     #    wLight = wLight | 0x7fff0000
 
@@ -509,7 +509,7 @@ def processFT020T(sLine, lastFT020TTimeStamp, ReadingCount):
     SunlightVisible = wLight
     SunlightUVIndex = round(wUVI / 10.0, 1)
 
-    if (var['batterylow'] == 0):
+    if (var['battery_ok'] == 1):
         BatteryOK = "OK"
         BatteryLevel = 100
     else:
