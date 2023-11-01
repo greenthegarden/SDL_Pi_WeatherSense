@@ -1120,7 +1120,7 @@ def readSensors():
             if ((sLine.find('F007TH') != -1) or (sLine.find('F016TH') != -1)):
                 processF016TH(sLine, IndoorReadingCountArray)
                 
-            if ((sLine.find('FT0300') != -1) or (sLine.find('FT020T') != -1)):
+            if ((sLine.find('FT0300') != -1) or (sLine.find('FT020T') != -1) or (sLine.find('Cotech-367959') != -1)):
                 lastFT020TTimeStamp = processFT020T(sLine, lastFT020TTimeStamp, FT020Count)
                 FT020Count = FT020Count + 1
 
